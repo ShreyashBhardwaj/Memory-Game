@@ -42,8 +42,6 @@ function nextSequence() {
   gamePattern.push(buttons[randomIndex]);
   gameLevel++;
 
-  console.log(buttons[randomIndex]);
-
   playPattern();
 }
 
