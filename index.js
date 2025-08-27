@@ -6,6 +6,8 @@ const sounds = [
   "/sounds/wrong.mp3",
 ];
 
+let gameLevel;
+
 const buttons = ["#green", "#red", "#yellow", "#blue"];
 
 let gamePattern = ["#blue", "#green", "#yellow", "#red"];
@@ -16,9 +18,7 @@ let userSelection = [];
 let button = document.querySelectorAll(".btn");
 
 for (var i = 0; i < button.length; i++) {
-  button[i].addEventListener("click", function () {
-    console.log("click");
-  });
+  button[i].addEventListener("click", playerMode);
 }
 
 // Game Start
@@ -28,22 +28,28 @@ document.addEventListener("keypress", function () {
 });
 
 function gameStart() {
-  let gameLevel = 0;
   let title = document.querySelector("#level-title");
 
-  gameMode();
   //   playerMode();
 
-  //   for (gameLevel = 0; gameLevel < gamePattern.length; gameLevel++) {
-  //     title.innerHTML = "Level " + (gameLevel + 1);
-  //   }
+  for (gameLevel = 0; gameLevel < gamePattern.length; gameLevel++) {
+    title.innerHTML = "Level " + (gameLevel + 1);
+    gameMode(gamePattern[gameLevel]);
+  }
 }
 
-function gameMode() {
-  var buttonClicked = document.querySelector(gamePattern[0]).getAttribute("id");
+function gameMode(gameClicked) {
+  var buttonClicked = document.querySelector(gameClicked).getAttribute("id");
   console.log(buttonClicked);
   animateOnClick(buttonClicked);
   playSound(buttonClicked);
+}
+
+function playerMode(clickedColor) {
+  var mouseClicked = clickedColor.target.id;
+  animateOnClick(mouseClicked);
+  playSound(mouseClicked);
+  check(mouseClicked);
 }
 
 // Function to Generate pattern
@@ -52,7 +58,25 @@ function generatePattern() {}
 
 // To Check Whether Pattern is followed
 
-function check(gamePattern, userSelection) {}
+function check(userSelection) {
+  for (let i = 0; i < gameLevel; i++) {
+    if (userSelection === gamePattern[i]) {
+      continue;
+    } else {
+      gameOver();
+      break;
+    }
+  }
+}
+
+function gameOver() {
+  document.querySelector("body").classList.add("game-over");
+  setTimeout(function () {
+    document.querySelector("body").classList.remove("game-over");
+  }, 100);
+  var audio = new Audio(sounds[4]);
+  audio.play();
+}
 
 // Sound to be played
 
