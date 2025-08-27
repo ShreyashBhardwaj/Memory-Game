@@ -6,7 +6,9 @@ const sounds = [
   "/sounds/wrong.mp3",
 ];
 
-let gameLevel;
+let gameLevel = 0;
+
+let isPlayerTurn;
 
 const buttons = ["#green", "#red", "#yellow", "#blue"];
 
@@ -28,14 +30,16 @@ document.addEventListener("keypress", function () {
 });
 
 function gameStart() {
+  nextSequence();
+}
+
+function nextSequence() {
   let title = document.querySelector("#level-title");
-
-  //   playerMode();
-
-  for (gameLevel = 0; gameLevel < gamePattern.length; gameLevel++) {
-    title.innerHTML = "Level " + (gameLevel + 1);
-    gameMode(gamePattern[gameLevel]);
-  }
+  title.innerHTML = "Level " + (gameLevel + 1);
+  gameMode(gamePattern[gameLevel]);
+  userSelection.length = 0;
+  isPlayerTurn = true;
+  gameLevel++;
 }
 
 function gameMode(gameClicked) {
@@ -49,33 +53,35 @@ function playerMode(clickedColor) {
   var mouseClicked = clickedColor.target.id;
   animateOnClick(mouseClicked);
   playSound(mouseClicked);
-  check(mouseClicked);
+  userSelection.push(mouseClicked);
+  check();
 }
-
-// Function to Generate pattern
-
-function generatePattern() {}
 
 // To Check Whether Pattern is followed
 
-function check(userSelection) {
-  for (let i = 0; i < gameLevel; i++) {
-    if (userSelection === gamePattern[i]) {
-      continue;
-    } else {
-      gameOver();
-      break;
-    }
+function check() {
+  let currentIndex = userSelection.length - 1;
+
+  if ("#" + userSelection[currentIndex] !== gamePattern[currentIndex]) {
+    gameOver();
+    return;
+  }
+
+  if (userSelection.length === gameLevel) {
+    nextSequence();
   }
 }
 
 function gameOver() {
+  let title = document.querySelector("#level-title");
+  title.innerHTML = "You Lose!! Press A Key to Play Again";
   document.querySelector("body").classList.add("game-over");
   setTimeout(function () {
     document.querySelector("body").classList.remove("game-over");
   }, 100);
   var audio = new Audio(sounds[4]);
   audio.play();
+  gameLevel = 0;
 }
 
 // Sound to be played
