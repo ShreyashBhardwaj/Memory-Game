@@ -9,6 +9,7 @@ const sounds = [
 let gameLevel = 0;
 
 let isPlayerTurn;
+let started = false;
 
 const buttons = ["#green", "#red", "#yellow", "#blue"];
 
@@ -25,7 +26,10 @@ for (var i = 0; i < button.length; i++) {
 
 // Game Start
 document.addEventListener("keypress", function () {
-  gameStart();
+  if (!started) {
+    started = true;
+    gameStart();
+  }
   console.log("Game Start");
 });
 
@@ -46,10 +50,16 @@ function nextSequence() {
 }
 
 function playPattern() {
+  isPlayerTurn = false;
   gamePattern.forEach((color, index) => {
     setTimeout(() => {
       gameMode(color);
-    }, 500 * (index + 1)); // 500ms delay between flashes
+      if (index === gamePattern.length - 1) {
+        setTimeout(() => {
+          isPlayerTurn = true;
+        }, 500);
+      }
+    }, 1000 * (index + 1)); // slower for clarity
   });
 }
 
@@ -61,6 +71,7 @@ function gameMode(gameClicked) {
 }
 
 function playerMode(clickedColor) {
+  if (!isPlayerTurn) return;
   var mouseClicked = clickedColor.target.id;
   animateOnClick(mouseClicked);
   playSound(mouseClicked);
@@ -95,6 +106,7 @@ function gameOver() {
   gameLevel = 0;
   gamePattern = [];
   userSelection = [];
+  started = false;
 }
 
 // Sound to be played
