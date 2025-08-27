@@ -95,6 +95,8 @@ function gameOver() {
   var audio = new Audio(sounds[4]);
   audio.play();
   gameLevel = 0;
+  gamePattern = [];
+  userSelection = [];
 }
 
 // Sound to be played
