@@ -60,9 +60,9 @@ A simple implementation of the classic **Simon Game** built with **HTML**, **CSS
 ---
 
 ## 📸 Screenshot 
-(img/gameStart.png "Game Start")
-(img/level3.png "On Level 3")
-(img/gameOver.png "Game Over")
+![Game Start](img/gameStart.png "Game Start")
+![On Level 3](img/level3.png "On Level 3")
+![Game Over](img/gameOver.png "Game Over")
 
 
 ---
