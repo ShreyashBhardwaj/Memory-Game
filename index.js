@@ -12,7 +12,7 @@ let isPlayerTurn;
 
 const buttons = ["#green", "#red", "#yellow", "#blue"];
 
-let gamePattern = ["#blue", "#green", "#yellow", "#red"];
+let gamePattern = [];
 let userSelection = [];
 
 // Click Listeners for the Buttons
@@ -36,10 +36,23 @@ function gameStart() {
 function nextSequence() {
   let title = document.querySelector("#level-title");
   title.innerHTML = "Level " + (gameLevel + 1);
-  gameMode(gamePattern[gameLevel]);
   userSelection.length = 0;
-  isPlayerTurn = true;
+
+  const randomIndex = Math.floor(Math.random() * 4);
+  gamePattern.push(buttons[randomIndex]);
   gameLevel++;
+
+  console.log(buttons[randomIndex]);
+
+  playPattern();
+}
+
+function playPattern() {
+  gamePattern.forEach((color, index) => {
+    setTimeout(() => {
+      gameMode(color);
+    }, 500 * (index + 1)); // 500ms delay between flashes
+  });
 }
 
 function gameMode(gameClicked) {
