@@ -1,9 +1,9 @@
 const sounds = [
-  "/sounds/blue.mp3",
-  "/sounds/green.mp3",
-  "/sounds/red.mp3",
-  "/sounds/yellow.mp3",
-  "/sounds/wrong.mp3",
+  "sounds/blue.mp3",
+  "sounds/green.mp3",
+  "sounds/red.mp3",
+  "sounds/yellow.mp3",
+  "sounds/wrong.mp3",
 ];
 
 let gameLevel = 0;
